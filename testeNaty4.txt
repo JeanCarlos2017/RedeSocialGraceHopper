@@ -1,4 +1,10 @@
 git status
 git add .
 git status
-testaaaaaaaandooo
+git fetch origin master
+git pull origin master
+git commit -m "texto"
+git push origin mastergit status
+git add .
+git status
+testaaaaaaaandooodd
