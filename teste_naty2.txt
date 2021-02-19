@@ -1,1 +1,6 @@
-Natyyyyyy222
+<<<<<<< HEAD
+Naty
+Editando o da Naty pq sou ousado hahahaha
+=======
+Natyyyyyy222Oieeee
+>>>>>>> ef35eae5abd6547049cfb92ef80de2574396a6e1
