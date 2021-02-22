@@ -1,7 +1,0 @@
-Hello, amigos!
-<<<<<<< HEAD
-=======
-editando aqui pra ver se dá bom! 
-uhuuuul
-Jejê me manda um pão de mel!
->>>>>>> 83b854fab0627f7c51236080c030733d63ebc6ca

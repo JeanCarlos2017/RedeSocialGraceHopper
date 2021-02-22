@@ -1,4 +1,0 @@
-git status
-git add .
-git status
-222222
