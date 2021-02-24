@@ -27,11 +27,18 @@ public class TemaService {
 		}
 	}
 
-	public void delete(long id_tema) {
+	public boolean delete(long id_tema) {
 		Optional<TemaEntidade> busca= temaRepositorio.findById(id_tema);
 		if(busca.isPresent()){
 			temaRepositorio.delete(busca.get());
+			return true;
 		}
+		return false;
 	}
 
+	public TemaRepository getTemaRepositorio() {
+		return temaRepositorio;
+	}
+	
+	
 }
