@@ -37,8 +37,7 @@ public class PostagemEntidade {
 	@NotNull
 	private String imagem;
 	
-	@NotNull
-	private long saldo_reacoes;
+	private long saldo_reacoes= 0;
 	
 	@ManyToMany(mappedBy= "postagemList", fetch= FetchType.LAZY)
 	@JsonIgnoreProperties("postagemList")

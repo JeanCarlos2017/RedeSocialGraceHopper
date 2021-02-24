@@ -27,11 +27,13 @@ public class PostagemService {
 		}
 	}
 
-	public void delete(long id_postagem) {
+	public boolean delete(long id_postagem) {
 		Optional<PostagemEntidade> busca= postagemRepositorio.findById(id_postagem);
 		if(busca.isPresent()) {
 			postagemRepositorio.deleteById(id_postagem);
+			return true;
 		}
+		return false;
 	}
 
 	public PostagemRepository getPostagemRepositorio() {
