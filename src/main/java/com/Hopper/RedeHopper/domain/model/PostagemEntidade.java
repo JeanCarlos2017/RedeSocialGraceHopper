@@ -1,22 +1,26 @@
 package com.Hopper.RedeHopper.domain.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
-@Entity @Table(name= "postagem")
+@Entity @Table(name = "tb_postagem")
 public class PostagemEntidade {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_postagem;
 	
 	@NotNull
@@ -26,10 +30,9 @@ public class PostagemEntidade {
 	private String conteudo;
 	
 	@NotNull @Temporal(TemporalType.TIMESTAMP)
-	private Date data_publicacao = new java.sql.Date(System.currentTimeMillis());
-	
-//	@NotNull //no momento o usuário ainda nao existe
-//	private UsuarioLogin usuario;
+	private Date data_publicacao= new java.sql.Date(System.currentTimeMillis());
+
+	//private UsuarioLogin usuario; próxima sprint
 	
 	@NotNull
 	private String imagem;
@@ -37,10 +40,26 @@ public class PostagemEntidade {
 	@NotNull
 	private long saldo_reacoes;
 	
+	@ManyToMany(mappedBy= "postagemList", fetch= FetchType.LAZY)
+	@JsonIgnoreProperties("postagemList")
+	private Set<TemaEntidade> temaList= new HashSet<>();
+	
+	//construtor
 	public PostagemEntidade() {
-		saldo_reacoes= 0;
+		this.saldo_reacoes= 0;
 	}
 
+	public void addReacaoPositiva() {
+		this.saldo_reacoes++;
+
+	}
+
+	public void addReacaoNegativa() {
+		this.saldo_reacoes--;
+	}
+
+	
+	//getter and setter 
 	public long getId_postagem() {
 		return id_postagem;
 	}
@@ -73,7 +92,6 @@ public class PostagemEntidade {
 		this.data_publicacao = data_publicacao;
 	}
 
-
 	public String getImagem() {
 		return imagem;
 	}
@@ -82,15 +100,17 @@ public class PostagemEntidade {
 		this.imagem = imagem;
 	}
 
+	public Set<TemaEntidade> getTemaList() {
+		return temaList;
+	}
+
+	public void setTemaList(Set<TemaEntidade> temaList) {
+		this.temaList = temaList;
+	}
+
 	public long getSaldo_reacoes() {
 		return saldo_reacoes;
 	}
-
-	public void setSaldo_reacoes(long saldo_reacoes) {
-		this.saldo_reacoes = saldo_reacoes;
-	}
-
-
 	
-
+	
 }
