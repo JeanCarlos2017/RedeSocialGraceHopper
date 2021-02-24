@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
+import com.Hopper.RedeHopper.domain.service.PostagemETemaService;
 import com.Hopper.RedeHopper.domain.service.PostagemService;
 
 @RestController
@@ -27,6 +28,9 @@ import com.Hopper.RedeHopper.domain.service.PostagemService;
 public class PostagemController {
 	@Autowired
 	private PostagemService postagemService;
+	
+	@Autowired
+	private PostagemETemaService postTemaService;
 	
 	@PostMapping
 	public ResponseEntity<PostagemEntidade> addPostagem(@Valid @RequestBody PostagemEntidade postagem) {
@@ -58,7 +62,14 @@ public class PostagemController {
 	public ResponseEntity<List<PostagemEntidade>> listarPostagem() {
 		return ResponseEntity.ok(postagemService.getPostagemRepositorio().findAll());
 	}
-
+	
+	@PostMapping("/{id_postagem}/add/tema/{id_tema}")
+	public ResponseEntity<Void> addTemaPostagem(@PathVariable long id_postagem, @PathVariable long id_tema){
+		boolean adicionou= postTemaService.addTemaPostagem(id_tema, id_postagem);
+		if(adicionou) return ResponseEntity.noContent().build();
+		else return ResponseEntity.notFound().build();
+	}
+	
 	
 
 }
