@@ -2,8 +2,11 @@ package com.Hopper.RedeHopper.api.controller;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import javax.validation.Valid;
 
+=======
+>>>>>>> a1e4e6904861994f15c33e000e6d387f69100d1a
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,10 @@ import com.Hopper.RedeHopper.repository.UsuarioRepository;
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin("*")
+<<<<<<< HEAD
+=======
+
+>>>>>>> a1e4e6904861994f15c33e000e6d387f69100d1a
 public class UsuarioController {
 
 	@Autowired
@@ -41,23 +48,39 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/nome/{nome}")
+<<<<<<< HEAD
+=======
+	
+>>>>>>> a1e4e6904861994f15c33e000e6d387f69100d1a
 	public ResponseEntity<List<Usuario>> GetByNome(@PathVariable String nome) {
 		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(nome));
 	}
 	
 	@GetMapping("/email/{email}")
+<<<<<<< HEAD
+=======
+	
+>>>>>>> a1e4e6904861994f15c33e000e6d387f69100d1a
 	public ResponseEntity<List<Usuario>> GetByEmail(@PathVariable String email) {
 		return ResponseEntity.ok(repository.findAllByNomeContainingIgnoreCase(email));
 	}
 	
 	
 	@PostMapping
+<<<<<<< HEAD
 	public ResponseEntity<Usuario> post (@ Valid @RequestBody Usuario usuario){
+=======
+	public ResponseEntity<Usuario> post (@RequestBody Usuario usuario){
+>>>>>>> a1e4e6904861994f15c33e000e6d387f69100d1a
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(usuario));
 	}
 	
 	@PutMapping
+<<<<<<< HEAD
 	public ResponseEntity<Usuario> put (@Valid @RequestBody Usuario usuario){
+=======
+	public ResponseEntity<Usuario> put (@RequestBody Usuario usuario){
+>>>>>>> a1e4e6904861994f15c33e000e6d387f69100d1a
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(usuario));
 	}
 	

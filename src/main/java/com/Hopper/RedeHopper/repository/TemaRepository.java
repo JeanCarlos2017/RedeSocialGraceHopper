@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 	package com.Hopper.RedeHopper.repository;
+=======
+package com.Hopper.RedeHopper.repository;
+>>>>>>> a1e4e6904861994f15c33e000e6d387f69100d1a
 
 import java.util.List;
 
