@@ -25,17 +25,19 @@ public class UsuarioEntidade {
 	
 	private long codigo_usuario;
 
+	public UsuarioEntidade() {
+		
+	}
 	
-	public void gerarCodigo() {
+	public long gerarCodigo() {
+		long codigoUsuario= 0L;
 		int lenght= this.nome.length();
 		for(int i= 0; i < lenght; i++) {
-			this.codigo_usuario += nome.codePointAt(i);
+			codigoUsuario += nome.codePointAt(i);
 		}
+		return codigoUsuario;
 	}
 	
-	public UsuarioEntidade() {
-		this.gerarCodigo();
-	}
 	//getters and setters 
 	public long getId_usuario() {
 		return id_usuario;
