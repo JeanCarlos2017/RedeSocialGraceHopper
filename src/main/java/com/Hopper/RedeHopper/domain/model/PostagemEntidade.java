@@ -23,7 +23,7 @@ public class PostagemEntidade {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_postagem;
-	
+	@NotNull
 	private String titulo;
 	
 	private String conteudo;
@@ -33,7 +33,7 @@ public class PostagemEntidade {
 
 	//private UsuarioLogin usuario; próxima sprint
 	
-	@NotNull
+	
 	private String imagem;
 	
 	private long saldo_reacoes= 0;
