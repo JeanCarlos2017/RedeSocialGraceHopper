@@ -2,6 +2,8 @@ package com.Hopper.RedeHopper.domain.service;
 
 import java.nio.charset.Charset;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,17 @@ import com.Hopper.RedeHopper.domain.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
+	//validação de email
+	private static final String EMAIL_PATTERN = 
+	        "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+	        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	private boolean validaEmail(String email) {
-		return true;
+		Matcher matcher = pattern.matcher(email);
+	    return matcher.matches();
 	}
 
 	private boolean validaNome(String nome) {
