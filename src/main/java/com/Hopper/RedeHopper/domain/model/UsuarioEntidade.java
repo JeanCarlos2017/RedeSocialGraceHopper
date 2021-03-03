@@ -1,11 +1,18 @@
 package com.Hopper.RedeHopper.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity @Table(name="tb_usuario")
 public class UsuarioEntidade {
@@ -24,6 +31,10 @@ public class UsuarioEntidade {
 	private String url_foto;
 	
 	private long codigo_usuario;
+	
+	@OneToMany(mappedBy= "usuario", cascade= CascadeType.ALL)
+	@JsonIgnoreProperties("usuario")
+	private List<PostagemEntidade> postagensUsuario= new ArrayList<PostagemEntidade>();
 
 	public UsuarioEntidade() {
 		
