@@ -78,8 +78,8 @@ public class UsuarioEntidade {
 	}
 
 
-	public void setCodigo_usuario(long codigo_usuario) {
-		this.codigo_usuario = codigo_usuario;
+	public void setCodigo_usuario() {
+		this.codigo_usuario = this.gerarCodigo();
 	}
 
 	public String getUrl_foto() {
