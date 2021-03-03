@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
-import com.Hopper.RedeHopper.domain.service.PostagemETemaService;
 import com.Hopper.RedeHopper.domain.service.PostagemService;
 
 @RestController
@@ -29,9 +28,6 @@ public class PostagemController {
 	@Autowired
 	private PostagemService postagemService;
 	
-	@Autowired
-	private PostagemETemaService postTemaService;
-	
 	@PostMapping("/cadastrar")
 	public ResponseEntity<PostagemEntidade> addPostagem(@Valid @PathVariable long id_usuario,
 								@RequestBody PostagemEntidade postagem) {
@@ -39,11 +35,10 @@ public class PostagemController {
 	}
 	
 	@PutMapping("/alterar/{id_postagem}")
-	public ResponseEntity<PostagemEntidade> alterarPostagem(@Valid @PathVariable long id_postagem, 
-										@RequestBody PostagemEntidade postagem) {
-		PostagemEntidade update= postagemService.put(postagem, id_postagem);
-		if(update == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		else return ResponseEntity.status(HttpStatus.ACCEPTED).body(update);
+	public ResponseEntity<PostagemEntidade> alterarPostagem(@Valid @PathVariable long id_postagem,
+							@PathVariable long id_usuario, 	@RequestBody PostagemEntidade postagem) {
+		PostagemEntidade update= postagemService.put(postagem, id_postagem, id_usuario);
+		return this.valida(update, HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/deletar/{id_postagem}")
