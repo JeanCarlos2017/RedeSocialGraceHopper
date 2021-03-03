@@ -35,31 +35,24 @@ public class PostagemService {
 	}
 	
 	private PostagemEntidade addTemaPostagem(PostagemEntidade post) {
-		Optional<TemaEntidade> tema;
-		Set<Long> listIdTema= new HashSet<>();
-		Iterator<TemaEntidade> value= post.getTemaList().iterator();
-		//pega a lista com os id_tema
-		while (value.hasNext()) { 
+		Set<Long> listIdTema = new HashSet<>();
+		Iterator<TemaEntidade> value = post.getTemaList().iterator();
+		// pega a lista com os id_tema
+		while (value.hasNext()) {
 			listIdTema.add(value.next().getId_tema());
 		}
-		//faz uma iteração sobre a lista de id_Tema e adiciona a postagem ao tema
-		Iterator<Long> iteratorIdTema= listIdTema.iterator();
-		while (iteratorIdTema.hasNext()) { 
-			 tema= temaService.getTemaRepositorio().findById(iteratorIdTema.next());
-			 if(tema.isPresent()) {
-				 post.getTemaList().add(tema.get());
-				 tema.get().getPostagemList().add(post);
-				 temaService.save(tema.get());
-			 }
+		// faz uma iteração sobre a lista de id_Tema e adiciona a postagem ao tema
+		Iterator<Long> iteratorIdTema = listIdTema.iterator();
+		while (iteratorIdTema.hasNext()) {
+			temaService.getTemaRepositorio().findById(iteratorIdTema.next()).ifPresent(tema -> {
+				post.getTemaList().add(tema);
+				tema.getPostagemList().add(post);
+				temaService.save(tema);
+			});
 		}
-		 return post;
+		return post;
 	}
 
-	public PostagemEntidade save(PostagemEntidade postagem) {
-		if(this.validaPostagem(postagem)) return postagemRepositorio.save(postagem);
-		else return null;
-	}
-	
 	public PostagemEntidade cadastraPostagem(PostagemEntidade postEntidade, long idUsuario) {
 		Optional<UsuarioEntidade> user = usuarioService.getUsuarioRepository().findById(idUsuario);
 		// valida a postagem
@@ -80,14 +73,16 @@ public class PostagemService {
 		}else return null;
 	}
 
-	public PostagemEntidade put(PostagemEntidade postagem, long id_postagem) {
-		Optional<PostagemEntidade> busca= postagemRepositorio.findById(id_postagem);
-		if(busca.isEmpty()) return null;
-		else {
+	public PostagemEntidade put(PostagemEntidade postagem, long id_postagem, long idUsuario) {
+		Optional<PostagemEntidade> busca = postagemRepositorio.findById(id_postagem);
+		if (busca.isPresent()) {
 			postagem.setId_postagem(id_postagem);
-			return postagemRepositorio.save(postagem);
+			return this.cadastraPostagem(postagem, idUsuario);
 		}
+		
+		return null;
 	}
+	
 	public void removeTemaPost(PostagemEntidade post) {
 		//remove todos os temas que tem o post relacionado
 		Iterator<TemaEntidade> iterator= post.getTemaList().iterator();
@@ -98,6 +93,7 @@ public class PostagemService {
 			temaService.save(tema);
 		}
 	}
+	
 	public boolean delete(long id_postagem) {
 		Optional<PostagemEntidade> busca= postagemRepositorio.findById(id_postagem);
 		if(busca.isPresent()) {
@@ -111,6 +107,14 @@ public class PostagemService {
 	public PostagemRepository getPostagemRepositorio() {
 		return postagemRepositorio;
 	}
+
+	
+	public PostagemEntidade save(PostagemEntidade postagem) {
+		if(this.validaPostagem(postagem)) return postagemRepositorio.save(postagem);
+		else return null;
+	}
+		
+	
 	
 	
 }
