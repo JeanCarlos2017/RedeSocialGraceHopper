@@ -24,10 +24,8 @@ public class PostagemEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_postagem;
 	
-	@NotNull
 	private String titulo;
 	
-	@NotNull
 	private String conteudo;
 	
 	@NotNull @Temporal(TemporalType.TIMESTAMP)
@@ -114,6 +112,14 @@ public class PostagemEntidade {
 
 	public long getSaldo_reacoes() {
 		return saldo_reacoes;
+	}
+
+	public UsuarioEntidade getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioEntidade usuario) {
+		this.usuario = usuario;
 	}
 	
 	
