@@ -37,7 +37,7 @@ Caso não saiba como executar uma aplicação Spring Boot com Maven ou um execut
  
  4. [Maven](https://maven.apache.org/)
  
- 6. [Ppring Data JPA](https://spring.io/projects/spring-data)
+ 6. [Spring Data JPA](https://spring.io/projects/spring-data)
  7. [Spring Security](https://spring.io/projects/spring-security)
 
 
