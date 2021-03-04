@@ -51,6 +51,7 @@ public class PostagemService {
 			});
 		}
 		return post;
+
 	}
 
 	public PostagemEntidade cadastraPostagem(PostagemEntidade postEntidade, long idUsuario) {
@@ -61,6 +62,10 @@ public class PostagemService {
 			if (user.isPresent()) {
 				//coloco o usuário como criador da postagem 
 				postEntidade.setUsuario(user.get());
+				//verifica os temas que passaram para a postagem
+				if(this.verificaTemaNaoExistente(postEntidade)) {
+					return null;
+				}
 				//salvo a postagem sem os temas, para evitar duplicagem
 				postEntidade= postagemRepositorio.save(postEntidade);
 				//adiciono a postagem aos temas relacionados 
@@ -76,6 +81,8 @@ public class PostagemService {
 	public PostagemEntidade put(PostagemEntidade postagem, long id_postagem, long idUsuario) {
 		Optional<PostagemEntidade> busca = postagemRepositorio.findById(id_postagem);
 		if (busca.isPresent()) {
+			//removo a postagem para eu poder adicionar uma nova com mesmo id
+			this.removeTemaPost(postagem);
 			postagem.setId_postagem(id_postagem);
 			return this.cadastraPostagem(postagem, idUsuario);
 		}
@@ -84,13 +91,17 @@ public class PostagemService {
 	}
 	
 	public void removeTemaPost(PostagemEntidade post) {
-		//remove todos os temas que tem o post relacionado
-		Iterator<TemaEntidade> iterator= post.getTemaList().iterator();
+		// remove todos os temas que tem o post relacionado
+		Iterator<TemaEntidade> iterator = post.getTemaList().iterator();
 		TemaEntidade tema;
-		while(iterator.hasNext()) {
-			tema= iterator.next();
-			tema.getPostagemList().remove(post);
-			temaService.save(tema);
+		while (iterator.hasNext()) {
+			tema = iterator.next();
+			if (tema.getPostagemList().contains(post)) {
+				//para casos em que a relação foi mal formada, e apenas o post tem relação com o tema, e o tema nao 
+				//relação com o post
+				tema.getPostagemList().remove(post);
+				temaService.save(tema);
+			}
 		}
 	}
 	
@@ -114,7 +125,16 @@ public class PostagemService {
 		else return null;
 	}
 		
-	
+	private boolean verificaTemaNaoExistente(PostagemEntidade post) {
+		Iterator<TemaEntidade> value = post.getTemaList().iterator();
+		while(value.hasNext()) {
+			//se encontrar algum id de uma tema inexistente retorna false e cancela o salvamento
+			if(postagemRepositorio.findById(value.next().getId_tema()).isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 }
