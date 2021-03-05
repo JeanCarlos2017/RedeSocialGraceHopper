@@ -22,7 +22,7 @@ public class TemaEntidade {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_tema;
 	
-	@NotNull
+	@NotNull(message = "categoria não pode ser nula")
 	private String categoria;
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
