@@ -10,7 +10,7 @@ GraceHopper é uma rede social com o intuito de ajudar os seus usuários  encont
  - [ ]  verifica que o usuário está passando um nome válido
  - [ ] exige um padrão de senha para o usuário
 ### 2. O sistema permite que o usuário faça login
-- [x] recupera um usuário através de nome e senha
+- [x] o usuário informa o seu nome e senha
 - [x] criptografa a senha do usuário antes de fazer a verificação no banco de dados 
 - [x] cria um token codificado para o usuário e libera o acesso para as funcionalidades do sistema 
 ### 3. O sistema permite que o usuário realize a operação de logout
@@ -42,13 +42,14 @@ GraceHopper é uma rede social com o intuito de ajudar os seus usuários  encont
 ### 4. O sistema permite a busca de uma postagem 
 - [x] o sistema permite listar todas as postagens
 - [x] o sistema permite a busca de uma postagem pelo seu id 
-- [ ] o sistema permite a busca de uma postagem pelo seu nome
+- [ ] o sistema permite a busca das postagens de um usuário
+- [ ] o sistema permite a busca das postagens de acordo com a data
 
 
 # Como executar o projeto? 
 Caso não saiba como executar uma aplicação Spring Boot com Maven ou um executável Jar clique [aqui](https://www.codeflow.site/pt/article/spring-boot-run-maven-vs-executable-jar)
 
-# Tecologias usadas no projeto até o momento?
+# Tecnologias usadas no projeto até o momento?
 
  1. [Spring Tools 4](https://spring.io/tools) integrado a IDE [Eclipse](https://www.eclipse.org/downloads/download.php?file=/oomph/epp/2020-12/R/eclipse-inst-jre-win64.exe)
  
@@ -60,5 +61,6 @@ Caso não saiba como executar uma aplicação Spring Boot com Maven ou um execut
  
  6. [Spring Data JPA](https://spring.io/projects/spring-data)
  7. [Spring Security](https://spring.io/projects/spring-security)
+ 8. [Swagger](https://swagger.io/)
 
 
