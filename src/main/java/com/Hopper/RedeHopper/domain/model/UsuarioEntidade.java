@@ -35,6 +35,11 @@ public class UsuarioEntidade {
 	@OneToMany(mappedBy= "usuario", cascade= CascadeType.ALL)
 	@JsonIgnoreProperties("usuario")
 	private List<PostagemEntidade> postagensUsuario= new ArrayList<PostagemEntidade>();
+	
+	
+	@OneToMany(mappedBy= "usuarioComentario", cascade= CascadeType.ALL)
+	@JsonIgnoreProperties("usuarioComentario")
+	private List<ComentarioEntidade> comentariosUsuario= new ArrayList<ComentarioEntidade>();
 
 	public UsuarioEntidade() {
 		
