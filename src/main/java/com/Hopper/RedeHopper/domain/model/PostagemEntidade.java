@@ -1,12 +1,9 @@
 package com.Hopper.RedeHopper.domain.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,13 +46,6 @@ public class PostagemEntidade {
 	@JsonIgnoreProperties("postagensUsuario")
 	UsuarioEntidade usuario;
 	
-	
-	@OneToMany(mappedBy= "postagemComentario", cascade= CascadeType.ALL)
-	@JsonIgnoreProperties("postagemComentario")
-	private List<ComentarioEntidade> comentariosUsuario= new ArrayList<ComentarioEntidade>();
-	
-	
-	
 	//construtor
 	public PostagemEntidade() {
 		this.saldo_reacoes= 0;
@@ -71,6 +60,8 @@ public class PostagemEntidade {
 		this.saldo_reacoes--;
 	}
 
+	
+	//getter and setter 
 	public long getId_postagem() {
 		return id_postagem;
 	}
@@ -111,20 +102,16 @@ public class PostagemEntidade {
 		this.imagem = imagem;
 	}
 
-	public long getSaldo_reacoes() {
-		return saldo_reacoes;
-	}
-
-	public void setSaldo_reacoes(long saldo_reacoes) {
-		this.saldo_reacoes = saldo_reacoes;
-	}
-
 	public Set<TemaEntidade> getTemaList() {
 		return temaList;
 	}
 
 	public void setTemaList(Set<TemaEntidade> temaList) {
 		this.temaList = temaList;
+	}
+
+	public long getSaldo_reacoes() {
+		return saldo_reacoes;
 	}
 
 	public UsuarioEntidade getUsuario() {
@@ -134,17 +121,6 @@ public class PostagemEntidade {
 	public void setUsuario(UsuarioEntidade usuario) {
 		this.usuario = usuario;
 	}
-
-	public List<ComentarioEntidade> getComentariosUsuario() {
-		return comentariosUsuario;
-	}
-
-	public void setComentariosUsuario(List<ComentarioEntidade> comentariosUsuario) {
-		this.comentariosUsuario = comentariosUsuario;
-	}
-
-
-	
 	
 	
 }

@@ -34,7 +34,7 @@ public class ComentarioEntidade {
 	UsuarioEntidade usuarioComentario;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("comentariosUsuario")
+	@JsonIgnoreProperties("comentariosPostagem")
 	PostagemEntidade postagemComentario;
 
 	private long saldo_reacoes = 0;
