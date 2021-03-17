@@ -46,8 +46,24 @@ public class PostagemEntidade {
 	@JsonIgnoreProperties("postagensUsuario")
 	UsuarioEntidade usuario;
 	
+	@ManyToOne
+	@JsonIgnoreProperties("grupoPostagemList")
+	private GrupoEntidade postagemGrupo;
+	
 
 	
+	public GrupoEntidade getPostagemGrupo() {
+		return postagemGrupo;
+	}
+
+	public void setPostagemGrupo(GrupoEntidade postagemGrupo) {
+		this.postagemGrupo = postagemGrupo;
+	}
+
+	public void setSaldo_reacoes(long saldo_reacoes) {
+		this.saldo_reacoes = saldo_reacoes;
+	}
+
 	//construtor
 	public PostagemEntidade() {
 		this.saldo_reacoes= 0;
