@@ -5,22 +5,16 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
-import com.Hopper.RedeHopper.domain.model.UsuarioEntidade;
 import com.Hopper.RedeHopper.domain.repository.GrupoRepository;
-import com.Hopper.RedeHopper.domain.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("grupo/{id_grupo}/grupo")
@@ -52,10 +46,10 @@ public class GrupoController {
 //		return ResponseEntity.ok(repository.findAllByTemaContaining(tema));
 //	}
 	
-	@GetMapping("/usario/{usuarioList}/grupo")
-	public ResponseEntity<List<GrupoEntidade>> GetByUsuario(@Valid @PathVariable String usuario) {
-		return ResponseEntity.ok(repository.findAllByUsuarioContaining(usuario));
-	}
+//	@GetMapping("/usario/{usuarioList}/grupo")
+//	public ResponseEntity<List<GrupoEntidade>> GetByUsuario(@Valid @PathVariable String usuario) {
+//		return ResponseEntity.ok(repository.findAllByUsuarioContaining(usuario));
+//	}
 	
 //	@PostMapping("/cadastrar")
 //	public ResponseEntity<GrupoEntidade> addPostagem(@Valid @PathVariable long id_usuario,

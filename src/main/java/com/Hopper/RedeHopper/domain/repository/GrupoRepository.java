@@ -8,7 +8,5 @@ import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
 
 public interface GrupoRepository extends JpaRepository<GrupoEntidade, Long>{
 	List<GrupoEntidade> findAllByNomeContaining(String nome);
-	List<GrupoEntidade> findAllByTemaContaining(String tema);
-	List<GrupoEntidade> findAllByUsuarioContaining(String usuario);
 
 }

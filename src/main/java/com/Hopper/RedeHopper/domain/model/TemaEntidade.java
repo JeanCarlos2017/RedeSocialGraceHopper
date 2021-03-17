@@ -25,12 +25,21 @@ public class TemaEntidade {
 	@NotNull(message = "categoria não pode ser nula")
 	private String categoria;
 	
+	//Relação Tema-Postagem
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "tema_postagem", 
 				joinColumns = @JoinColumn(name = "tema_id"), 
 				inverseJoinColumns = @JoinColumn(name = "postagem_id"))
 	@JsonIgnoreProperties("temaList")
 	private Set<PostagemEntidade> postagemList= new HashSet<>();
+	
+	// Relação Tema-Grupo 
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "tema_grupo", 
+				joinColumns = @JoinColumn(name = "tema_id"), 
+				inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	@JsonIgnoreProperties("grupoTemaList")
+	private Set<GrupoEntidade> grupoList= new HashSet<>();
 	
 	
 	//toString
