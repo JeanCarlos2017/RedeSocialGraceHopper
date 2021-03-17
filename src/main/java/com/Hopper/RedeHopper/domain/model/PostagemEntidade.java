@@ -46,6 +46,8 @@ public class PostagemEntidade {
 	@JsonIgnoreProperties("postagensUsuario")
 	UsuarioEntidade usuario;
 	
+
+	
 	//construtor
 	public PostagemEntidade() {
 		this.saldo_reacoes= 0;

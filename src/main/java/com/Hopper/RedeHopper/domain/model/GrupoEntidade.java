@@ -2,13 +2,14 @@ package com.Hopper.RedeHopper.domain.model;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,27 +31,27 @@ public class GrupoEntidade {
 	
 	private String fotoPerfil;
 	
-	@NotNull @Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataDeCriação = new java.sql.Date(System.currentTimeMillis());
 	
 	private String fotoCapa;
 	
-	@NotNull
-	private long qntIntegrantes = 0;
+	private long qntIntegrantes = 0;	
+		
+	// Relação Usuário-Grupo
+	@ManyToMany(mappedBy= "grupoParticipanteList", fetch= FetchType.LAZY)
+	@JsonIgnoreProperties("grupoParticipanteList")
+	private Set<UsuarioEntidade> usuarioParticipanteList= new HashSet<>();
 	
-	
-	private Set<TemaEntidade> temaList= new HashSet<>();
-	
-	
-	private Set<UsuarioEntidade> usuarioList= new HashSet<>();
-	
-	
-	private List<PostagemEntidade> postagemList;
-	
+	//Relação Grupo-Criador
 	@ManyToOne
-	@JsonIgnoreProperties("grupoCriadoPorUsuario")
-	private UsuarioEntidade criador;
+	@JsonIgnoreProperties("gruposCriadoPorUsuarios")
+	private UsuarioEntidade criadorGrupo;
 	
+	//Relação Grupo-Tema
+	@ManyToMany(mappedBy= "grupoList", fetch= FetchType.LAZY)
+	@JsonIgnoreProperties("grupoList")
+	private Set<TemaEntidade> grupoTemaList= new HashSet<>();
 	
 	
 
@@ -67,7 +68,8 @@ public class GrupoEntidade {
 	public void addTema() {
 		this.qntIntegrantes--;
 	}
-	
+
+	//Getters And Setters
 	
 	public long getId_grupo() {
 		return id_grupo;
@@ -76,7 +78,6 @@ public class GrupoEntidade {
 	public void setId_grupo(long id_grupo) {
 		this.id_grupo = id_grupo;
 	}
-	
 
 	public String getNome() {
 		return nome;
@@ -125,41 +126,29 @@ public class GrupoEntidade {
 	public void setQntIntegrantes(long qntIntegrantes) {
 		this.qntIntegrantes = qntIntegrantes;
 	}
-	
-	public Set<TemaEntidade> getTemaList() {
-		return temaList;
+
+	public Set<UsuarioEntidade> getUsuarioParticipanteList() {
+		return usuarioParticipanteList;
 	}
 
-	public void setTemaList(Set<TemaEntidade> temaList) {
-		this.temaList = temaList;
-	}
-	
-	public Set<UsuarioEntidade> getUsuarioList() {
-		return usuarioList;
+	public void setUsuarioParticipanteList(Set<UsuarioEntidade> usuarioParticipanteList) {
+		this.usuarioParticipanteList = usuarioParticipanteList;
 	}
 
-	public void setusuarioList(Set<UsuarioEntidade> usuarioList) {
-		this.usuarioList = usuarioList;
+	public UsuarioEntidade getCriadorGrupo() {
+		return criadorGrupo;
 	}
 
-	public List<PostagemEntidade> getPostagemList() {
-		return postagemList;
+	public void setCriadorGrupo(UsuarioEntidade criadorGrupo) {
+		this.criadorGrupo = criadorGrupo;
 	}
 
-	public void setPostagemList(List<PostagemEntidade> postagemList) {
-		this.postagemList = postagemList;
+	public Set<TemaEntidade> getGrupoTemaList() {
+		return grupoTemaList;
 	}
 
-	public UsuarioEntidade getCriador() {
-		return criador;
-	}
-
-	public void setCriador(UsuarioEntidade criador) {
-		this.criador = criador;
-	}
-
-	public void setUsuarioList(Set<UsuarioEntidade> usuarioList) {
-		this.usuarioList = usuarioList;
+	public void setGrupoTemaList(Set<TemaEntidade> grupoTemaList) {
+		this.grupoTemaList = grupoTemaList;
 	}
 	
 }

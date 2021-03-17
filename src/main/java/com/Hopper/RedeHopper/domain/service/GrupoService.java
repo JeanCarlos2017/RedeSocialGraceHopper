@@ -32,7 +32,7 @@ public class GrupoService {
 	}
 	
 	private boolean verificarDonoDoGrupo(GrupoEntidade grupoEntidade, long idUsuario) {
-		if (grupoEntidade.getCriador().getId_usuario()== idUsuario) {
+		if (grupoEntidade.getCriadorGrupo().getId_usuario()== idUsuario) {
 			return true;
 		}
 		else {
@@ -44,7 +44,7 @@ public class GrupoService {
 		Optional<UsuarioEntidade> usuario = usuarioService.getUsuarioRepository().findById(idUsuario);
 		if (usuario.isPresent()) {
 			if (this.validaGrupo(grupo)) {
-				grupo.setCriador(usuario.get());
+				grupo.setCriadorGrupo(usuario.get());
 				return grupoRepositorio.save(grupo);
 			}
 		}
