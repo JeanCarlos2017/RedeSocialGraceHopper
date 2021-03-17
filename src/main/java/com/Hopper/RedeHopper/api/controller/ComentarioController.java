@@ -42,7 +42,17 @@ public class ComentarioController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
-	//ValidaComentario
+	@DeleteMapping("/{id_comentario}")
+	public ResponseEntity<Void> deleteTema(@PathVariable long id_comentario) {
+		boolean deletou = comentarioService.delete(id_comentario);
+		if (deletou)
+			return ResponseEntity.noContent().build();
+		else
+			return ResponseEntity.notFound().build();
+
+	}
+
+	// ValidaComentario
 	private ResponseEntity<ComentarioEntidade> valida(ComentarioEntidade coment, HttpStatus status) {
 		if (coment == null)
 			return ResponseEntity.badRequest().build();

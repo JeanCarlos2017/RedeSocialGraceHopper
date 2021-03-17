@@ -72,4 +72,15 @@ public class ComentarioService {
 		}
 	}
 
+	// Deletar comentario
+	public boolean delete(long id_comentario) {
+		Optional<ComentarioEntidade> busca = comentarioRepositorio.findById(id_comentario);
+		if (busca.isPresent()) {
+			comentarioRepositorio.delete(busca.get());
+			return true;
+		}
+		return false;
+
+	}
+
 }
