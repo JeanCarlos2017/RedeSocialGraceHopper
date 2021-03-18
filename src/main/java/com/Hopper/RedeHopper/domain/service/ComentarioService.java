@@ -72,7 +72,7 @@ public class ComentarioService {
 		}
 	}
 
-	// Deletar comentario
+	// Deletar _comentario 
 	public boolean delete(long id_comentario) {
 		Optional<ComentarioEntidade> busca = comentarioRepositorio.findById(id_comentario);
 		if (busca.isPresent()) {
