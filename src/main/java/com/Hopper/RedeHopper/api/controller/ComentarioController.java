@@ -1,12 +1,13 @@
 package com.Hopper.RedeHopper.api.controller;
 
+import java.util.Optional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,13 +26,13 @@ public class ComentarioController {
 	@Autowired
 	private ComentarioService comentarioService;
 
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<ComentarioEntidade> addComentario(@Valid @PathVariable long id_usuario,
 			@PathVariable long id_postagem, @RequestBody ComentarioEntidade novoComentario) {
 		return this.valida(comentarioService.save(novoComentario, id_usuario, id_postagem), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{id_comentario}")
+	@PutMapping("/alterar/{id_comentario}")
 	public ResponseEntity<ComentarioEntidade> alteraComentario(@Valid @PathVariable long id_comentario,
 			@PathVariable long id_usuario, @PathVariable long id_postagem, @RequestBody ComentarioEntidade comentario) {
 		ComentarioEntidade update = comentarioService.put(comentario, id_comentario, id_usuario, id_postagem);
@@ -41,7 +42,7 @@ public class ComentarioController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
-	@DeleteMapping("/{id_comentario}")
+	@DeleteMapping("/deletar/{id_comentario}")
 	public ResponseEntity<Void> deleteTema(@PathVariable long id_comentario) {
 		boolean deletou = comentarioService.delete(id_comentario);
 		if (deletou)
@@ -49,6 +50,15 @@ public class ComentarioController {
 		else
 			return ResponseEntity.notFound().build();
 
+	}
+
+	@GetMapping("/buscar/{id_comentario}")
+	public ResponseEntity<ComentarioEntidade> buscarComentarioId(@PathVariable long id_comentario) {
+		Optional<ComentarioEntidade> busca = comentarioService.getComentarioRepositorio().findById(id_comentario);
+		if (busca.isPresent())
+			return ResponseEntity.status(HttpStatus.OK).body(busca.get());
+		else
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
 	// ValidaComentario
