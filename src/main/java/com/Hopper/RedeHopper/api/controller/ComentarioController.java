@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.Hopper.RedeHopper.domain.model.ComentarioEntidade;
-import com.Hopper.RedeHopper.domain.model.TemaEntidade;
 import com.Hopper.RedeHopper.domain.service.ComentarioService;
 
 @RestController

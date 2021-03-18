@@ -40,7 +40,7 @@ public class GrupoEntidade {
 	
 	private String fotoCapa;
 	
-	private long qntIntegrantes = 0;	
+	private long qntIntegrantes;
 		
 	// Relação Usuário-Grupo
 	@ManyToMany(mappedBy= "grupoParticipanteList", fetch= FetchType.LAZY)

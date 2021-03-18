@@ -29,10 +29,12 @@ public class ComentarioEntidade {
 
 	private String foto;
 
+	//relação usuário-comentário
 	@ManyToOne
 	@JsonIgnoreProperties("comentariosUsuario")
 	UsuarioEntidade usuarioComentario;
-	
+
+	//relação comentário-postagens
 	@ManyToOne
 	@JsonIgnoreProperties("comentariosPostagem")
 	PostagemEntidade postagemComentario;
