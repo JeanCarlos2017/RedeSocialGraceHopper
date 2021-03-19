@@ -33,13 +33,13 @@ public class ComentarioController {
 
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<ComentarioEntidade> addComentario(@Valid @PathVariable long id_usuario,
+	public ResponseEntity<ComentarioOutput> addComentario(@Valid @PathVariable long id_usuario,
 		@PathVariable long id_postagem, @RequestBody ComentarioEntidade novoComentario) {
 		return this.valida(comentarioService.save(novoComentario, id_usuario, id_postagem), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/alterar/{id_comentario}")
-	public ResponseEntity<ComentarioEntidade> alteraComentario(@Valid @PathVariable long id_comentario,
+	public ResponseEntity<ComentarioOutput> alteraComentario(@Valid @PathVariable long id_comentario,
 		@PathVariable long id_usuario, @PathVariable long id_postagem, @RequestBody ComentarioEntidade comentario) {
 		ComentarioOutput update = comentarioService.put(comentario, id_comentario, id_usuario, id_postagem);
 		if (update != null)
