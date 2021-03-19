@@ -30,17 +30,17 @@ public class TemaController {
 	@Autowired
 	private TemaService temaService;
 	
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<TemaEntidade> addTema(@Valid @RequestBody TemaEntidade tema) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(temaService.save(tema));
 	}
 	
-	@GetMapping
+	@GetMapping("/listar")
 	public ResponseEntity<List<TemaEntidade>> listaTema() {
 		return ResponseEntity.ok(temaService.getTemaRepositorio().findAll());
 	}
 	
-	@DeleteMapping("/{id_tema}")
+	@DeleteMapping("/deletar/{id_tema}")
 	public ResponseEntity<Void> deleteTema(@PathVariable long id_tema) {
 		boolean deletou= temaService.delete(id_tema);
 		if(deletou) return ResponseEntity.noContent().build();
@@ -48,14 +48,14 @@ public class TemaController {
 
 	}
 	
-	@PutMapping("/{id_tema}")
+	@PutMapping("/alterar/{id_tema}")
 	public ResponseEntity<TemaEntidade> alteraTema(@Valid @PathVariable long id_tema, @RequestBody TemaEntidade tema) {
 		TemaEntidade update= temaService.put(tema, id_tema);
 		if(update != null) return ResponseEntity.status(HttpStatus.ACCEPTED).body(tema);
 		else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 	
-	@GetMapping("/{id_tema}")
+	@GetMapping("/buscar/{id_tema}")
 	public ResponseEntity<TemaEntidade> buscaPorId(@PathVariable long id_tema){
 		Optional<TemaEntidade> tema= temaService.getTemaRepositorio().findById(id_tema);
 		if(tema.isPresent()) return ResponseEntity.status(HttpStatus.OK).body(tema.get());

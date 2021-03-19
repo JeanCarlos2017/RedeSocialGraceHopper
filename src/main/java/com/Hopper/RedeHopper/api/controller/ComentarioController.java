@@ -1,9 +1,10 @@
 package com.Hopper.RedeHopper.api.controller;
 
+
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +31,16 @@ public class ComentarioController {
 	@Autowired
 	private ComentarioService comentarioService;
 
-	@PostMapping
-	public ResponseEntity<ComentarioOutput> addComentario(@Valid @PathVariable long id_usuario,
-			@PathVariable long id_postagem, @RequestBody ComentarioEntidade novoComentario) {
+
+	@PostMapping("/cadastrar")
+	public ResponseEntity<ComentarioEntidade> addComentario(@Valid @PathVariable long id_usuario,
+		@PathVariable long id_postagem, @RequestBody ComentarioEntidade novoComentario) {
 		return this.valida(comentarioService.save(novoComentario, id_usuario, id_postagem), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{id_comentario}")
-	public ResponseEntity<ComentarioOutput> alteraComentario(@Valid @PathVariable long id_comentario,
-			@PathVariable long id_usuario, @PathVariable long id_postagem, @RequestBody ComentarioEntidade comentario) {
+	@PutMapping("/alterar/{id_comentario}")
+	public ResponseEntity<ComentarioEntidade> alteraComentario(@Valid @PathVariable long id_comentario,
+		@PathVariable long id_usuario, @PathVariable long id_postagem, @RequestBody ComentarioEntidade comentario) {
 		ComentarioOutput update = comentarioService.put(comentario, id_comentario, id_usuario, id_postagem);
 		if (update != null)
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(update);
@@ -46,8 +48,9 @@ public class ComentarioController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
-	@DeleteMapping("/{id_comentario}")
-	public ResponseEntity<Void> deleteComentario(@PathVariable long id_comentario) {
+
+	@DeleteMapping("/deletar/{id_comentario}")
+	public ResponseEntity<Void> deleteTema(@PathVariable long id_comentario) {
 		boolean deletou = comentarioService.delete(id_comentario);
 		if (deletou)
 			return ResponseEntity.noContent().build();
@@ -55,11 +58,23 @@ public class ComentarioController {
 			return ResponseEntity.notFound().build();
 
 	}
+
 	
 	@GetMapping("/listagem")
 	public ResponseEntity<List<ComentarioOutput>> getAllComentario(){
 		return ResponseEntity.ok(this.comentarioService.getAllComentario());
 	}
+
+
+	@GetMapping("/buscar/{id_comentario}")
+	public ResponseEntity<ComentarioEntidade> buscarComentarioId(@PathVariable long id_comentario) {
+		Optional<ComentarioEntidade> busca = comentarioService.getComentarioRepositorio().findById(id_comentario);
+		if (busca.isPresent())
+			return ResponseEntity.status(HttpStatus.OK).body(busca.get());
+		else
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	}
+
 	// ValidaComentario
 	private ResponseEntity<ComentarioOutput> valida(ComentarioOutput coment, HttpStatus status) {
 		if (coment == null)
