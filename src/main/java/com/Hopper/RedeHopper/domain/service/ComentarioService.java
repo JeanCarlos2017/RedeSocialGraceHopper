@@ -1,10 +1,13 @@
 package com.Hopper.RedeHopper.domain.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Hopper.RedeHopper.api.model.output.ComentarioOutput;
 import com.Hopper.RedeHopper.domain.model.ComentarioEntidade;
 import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
 import com.Hopper.RedeHopper.domain.model.UsuarioEntidade;
@@ -34,7 +37,7 @@ public class ComentarioService {
 	}
 
 	// Salva comentario
-	public ComentarioEntidade save(ComentarioEntidade novoComentario, long id_usuario, long id_postagem) {
+	public ComentarioOutput save(ComentarioEntidade novoComentario, long id_usuario, long id_postagem) {
 		Optional<UsuarioEntidade> user = usuarioService.getUsuarioRepository().findById(id_usuario);
 		Optional<PostagemEntidade> post = postagemService.getPostagemRepositorio().findById(id_postagem);
 		// valida o comentario
@@ -46,7 +49,7 @@ public class ComentarioService {
 				novoComentario.setPostagemComentario(post.get());
 
 			}
-			return comentarioRepositorio.save(novoComentario);
+			return comentarioEntidadeToOutput(comentarioRepositorio.save(novoComentario));
 		}
 
 		else {
@@ -57,7 +60,7 @@ public class ComentarioService {
 	}
 
 	// Alterar comentário.
-	public ComentarioEntidade put(ComentarioEntidade comentario, long id_comentario, long id_usuario,
+	public ComentarioOutput put(ComentarioEntidade comentario, long id_comentario, long id_usuario,
 			long id_postagem) {
 		Optional<ComentarioEntidade> busca = comentarioRepositorio.findById(id_comentario);
 		Optional<UsuarioEntidade> userAlter = usuarioService.getUsuarioRepository().findById(id_usuario);
@@ -68,7 +71,7 @@ public class ComentarioService {
 			comentario.setId_comentario(id_comentario);
 			comentario.setUsuarioComentario(userAlter.get());
 			comentario.setPostagemComentario(postAlter.get());
-			return comentarioRepositorio.save(comentario);
+			return this.comentarioEntidadeToOutput(comentarioRepositorio.save(comentario));
 		}
 	}
 
@@ -82,5 +85,25 @@ public class ComentarioService {
 		return false;
 
 	}
-
+	
+	//get all comentarios 
+	public List<ComentarioOutput> getAllComentario(){
+		return this.comentarioEntidadeListToOutput(this.comentarioRepositorio.findAll());
+	}
+	
+	//pega uma lista de comentarioEntidade e a transforma em uma lista de comentárioOutput
+	private List<ComentarioOutput> comentarioEntidadeListToOutput(List<ComentarioEntidade> comentarioEntidadeList){
+		List<ComentarioOutput> comentarioOutputList= new ArrayList<ComentarioOutput>();
+		
+		comentarioEntidadeList.stream().forEach(
+					comentarioEntidade -> comentarioOutputList.add(new ComentarioOutput(comentarioEntidade))
+		);
+		
+		return comentarioOutputList;
+	}
+	
+	//pega u comentárioEntidade e o transforma em um comentárioOutPut
+	private ComentarioOutput comentarioEntidadeToOutput(ComentarioEntidade comentarioEntidade) {
+		return new ComentarioOutput(comentarioEntidade);
+	}
 }
