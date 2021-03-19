@@ -37,12 +37,13 @@ public class UsuarioEntidade {
 	private String url_foto;
 	
 	private long codigo_usuario;
-	
-	@OneToMany(mappedBy= "usuario", cascade= CascadeType.ALL)
+	//relação usuário-postagem
+	@OneToMany(mappedBy= "usuario", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("usuario")
 	private List<PostagemEntidade> postagensUsuario= new ArrayList<PostagemEntidade>();	
 	
-	@OneToMany(mappedBy= "usuarioComentario", cascade= CascadeType.ALL)
+	//relação usuário-comentário
+	@OneToMany(mappedBy=  "usuarioComentario", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("usuarioComentario")
 	private List<ComentarioEntidade> comentariosUsuario= new ArrayList<ComentarioEntidade>();
 	
