@@ -5,14 +5,14 @@ import java.util.Date;
 import com.Hopper.RedeHopper.domain.model.ComentarioEntidade;
 
 public class ComentarioOutput {
-	private long id;
+	private long id_comentario;
 	private String texto;
 	private Date data_comentario;
 	private String foto;
 	private UsuarioOutput usuario;
 	
 	public ComentarioOutput(ComentarioEntidade comentarioEntidade) {
-		this.id= comentarioEntidade.getId_comentario();
+		this.id_comentario= comentarioEntidade.getId_comentario();
 		this.texto= comentarioEntidade.getTexto();
 		this.data_comentario= comentarioEntidade.getData_comentario();
 		this.foto= comentarioEntidade.getFoto();
@@ -25,11 +25,11 @@ public class ComentarioOutput {
 	}
 
 	public long getId() {
-		return id;
+		return id_comentario;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this.id_comentario = id;
 	}
 
 	public void setTexto(String texto) {

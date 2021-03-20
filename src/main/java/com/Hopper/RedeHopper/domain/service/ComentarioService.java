@@ -104,7 +104,7 @@ public class ComentarioService {
 		return comentarioOutputList;
 	}
 	
-	//pega u comentárioEntidade e o transforma em um comentárioOutPut
+	//pega o comentárioEntidade e o transforma em um comentárioOutPut
 	private ComentarioOutput comentarioEntidadeToOutput(ComentarioEntidade comentarioEntidade) {
 		return new ComentarioOutput(comentarioEntidade);
 	}
