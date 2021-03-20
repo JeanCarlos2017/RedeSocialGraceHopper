@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import com.Hopper.RedeHopper.domain.model.ComentarioEntidade;
+import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
 
 public class UtilModelToOutput {
-	// pega uma lista de comentarioEntidade e a transforma em uma lista de
-	// comentárioOutput
+	// pega uma lista de comentarioEntidade e a transforma em uma lista de ComentarioOutput
 	public static List<ComentarioOutput> comentarioEntidadeListToOutput(List<ComentarioEntidade> comentarioEntidadeList) {
 		List<ComentarioOutput> comentarioList = new ArrayList<ComentarioOutput>();
 		comentarioEntidadeList.stream()
@@ -25,5 +25,12 @@ public class UtilModelToOutput {
 		forEach(temaEntidade -> temaList.add(new TemaOutput(temaEntidade)));
 		return temaList;
 	}
-
+	
+	//postagemEntidadeList --> PostagemOutputList
+	public static List<PostagemOutput> postagemEntidadeToOutputList(List<PostagemEntidade> postagemEntidadeList) {
+		List<PostagemOutput> temaList= new ArrayList<>();
+		postagemEntidadeList.stream().
+			forEach(temaEntidade -> temaList.add(new PostagemOutput(temaEntidade)));
+		return temaList;
+	}
 }

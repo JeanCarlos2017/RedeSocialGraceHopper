@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Hopper.RedeHopper.api.model.output.PostagemOutput;
+import com.Hopper.RedeHopper.api.model.output.UtilModelToOutput;
 import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
 import com.Hopper.RedeHopper.domain.service.PostagemService;
 
@@ -56,8 +58,9 @@ public class PostagemController {
 	}
 	
 	@GetMapping("/listar")
-	public ResponseEntity<List<PostagemEntidade>> listarPostagem() {
-		return ResponseEntity.ok(postagemService.getPostagemRepositorio().findAll());
+	public ResponseEntity<List<PostagemOutput>> listarPostagem() {
+		List<PostagemEntidade> listaPostagem= postagemService.getPostagemRepositorio().findAll();
+		return ResponseEntity.ok(UtilModelToOutput.postagemEntidadeToOutputList(listaPostagem));
 	}
 	
 	private ResponseEntity<PostagemEntidade> valida(PostagemEntidade post, HttpStatus status){

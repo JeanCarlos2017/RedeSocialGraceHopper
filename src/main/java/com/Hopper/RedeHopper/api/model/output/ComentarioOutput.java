@@ -19,45 +19,25 @@ public class ComentarioOutput {
 		this.usuario= new UsuarioOutput(comentarioEntidade.getUsuarioComentario());
 	}
 	//getters and setters 
-	
-	public String getTexto() {
-		return texto;
-	}
 
-	public long getId() {
+	public long getId_comentario() {
 		return id_comentario;
 	}
 
-	public void setId(long id) {
-		this.id_comentario = id;
-	}
-
-	public void setTexto(String texto) {
-		this.texto = texto;
+	public String getTexto() {
+		return texto;
 	}
 
 	public Date getData_comentario() {
 		return data_comentario;
 	}
 
-	public void setData_comentario(Date data_comentario) {
-		this.data_comentario = data_comentario;
-	}
-
 	public String getFoto() {
 		return foto;
 	}
 
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
 	public UsuarioOutput getUsuario() {
 		return usuario;
-	}
-
-	public void setUsuario(UsuarioOutput usuario) {
-		this.usuario = usuario;
 	}
 	
 	

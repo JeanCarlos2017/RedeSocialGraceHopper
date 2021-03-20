@@ -13,18 +13,23 @@ public class PostagemOutput {
 	private Date data_postagem;
 	private String imagem;
 	private long saldo_reacoes;
-	private List<TemaOutput> temaList= new ArrayList<>();
-	private GrupoOutput grupoOutput;
-	private List<ComentarioOutput> comentarioList= new ArrayList<ComentarioOutput>();
-	
+	private List<TemaOutput> temaList = new ArrayList<>();
+	private List<ComentarioOutput> comentarioList = new ArrayList<ComentarioOutput>();
+
 	public PostagemOutput(PostagemEntidade postagemEntidade) {
-		this.id_postagem= postagemEntidade.getId_postagem();
-		this.usuario= new UsuarioOutput(postagemEntidade.getUsuario());
-		this.titulo= postagemEntidade.getTitulo();
-		this.data_postagem= postagemEntidade.getData_publicacao();
-		this.imagem= postagemEntidade.getImagem();
-		this.saldo_reacoes= postagemEntidade.getSaldo_reacoes();
-		this.temaList= UtilModelToOutput.temaEntidadeToOutputList(postagemEntidade.getTemaList());
+		this.id_postagem = postagemEntidade.getId_postagem();
+		if (postagemEntidade.getUsuario() != null) {
+			this.usuario = new UsuarioOutput(postagemEntidade.getUsuario());
+		}
+		this.titulo = postagemEntidade.getTitulo();
+		this.data_postagem = postagemEntidade.getData_publicacao();
+		this.imagem = postagemEntidade.getImagem();
+		this.saldo_reacoes = postagemEntidade.getSaldo_reacoes();
+		this.temaList = UtilModelToOutput.temaEntidadeToOutputList(postagemEntidade.getTemaList());
+		if(postagemEntidade.getComentariosPostagem() != null) {
+			this.comentarioList= UtilModelToOutput
+						.comentarioEntidadeListToOutput(postagemEntidade.getComentariosPostagem());
+		}
 	}
 
 	public long getId_postagem() {
@@ -83,14 +88,6 @@ public class PostagemOutput {
 		this.temaList = temaList;
 	}
 
-	public GrupoOutput getGrupoOutput() {
-		return grupoOutput;
-	}
-
-	public void setGrupoOutput(GrupoOutput grupoOutput) {
-		this.grupoOutput = grupoOutput;
-	}
-
 	public List<ComentarioOutput> getComentarioList() {
 		return comentarioList;
 	}
@@ -98,11 +95,5 @@ public class PostagemOutput {
 	public void setComentarioList(List<ComentarioOutput> comentarioList) {
 		this.comentarioList = comentarioList;
 	}
-	
-	
-	
-	
-	
-	
 
 }
