@@ -33,4 +33,9 @@ public class UtilModelToOutput {
 			forEach(temaEntidade -> temaList.add(new PostagemOutput(temaEntidade)));
 		return temaList;
 	}
+	
+	//postagemEntidade --> PostagemOutput
+	public static PostagemOutput postagemEntidadeToOutput(PostagemEntidade postagemEntidade) {
+		return new PostagemOutput(postagemEntidade);
+	}
 }
