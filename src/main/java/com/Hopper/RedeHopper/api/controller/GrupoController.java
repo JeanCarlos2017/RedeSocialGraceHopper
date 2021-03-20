@@ -25,24 +25,26 @@ public class GrupoController {
 
 	@Autowired
 	private GrupoService grupoService;
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<GrupoEntidade>> listarGrupo(){
+	public ResponseEntity<List<GrupoEntidade>> listarGrupo() {
 		return ResponseEntity.ok(grupoService.listarGrupo());
 	}
-	
+
 	@PostMapping("/cadastrar")
 	public ResponseEntity<GrupoEntidade> cadastraGrupo(@Valid @PathVariable long id_usuario,
-		@RequestBody GrupoEntidade grupoEntidade) {
-		return this.valida(this.grupoService.criarGrupo(id_usuario, grupoEntidade), HttpStatus.CREATED);
+			@RequestBody GrupoEntidade grupoEntidade) {
+		return this.valida(this.grupoService.criarGrupo(id_usuario, grupoEntidade), HttpStatus.CREATED,
+				HttpStatus.BAD_REQUEST);
 	}
 
 	// ValidaComentario
-	private ResponseEntity<GrupoEntidade> valida(GrupoEntidade grupoEntidade, HttpStatus status) {
+	private ResponseEntity<GrupoEntidade> valida(GrupoEntidade grupoEntidade, HttpStatus statusSucesso,
+			HttpStatus statusErro) {
 		if (grupoEntidade == null)
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.status(statusErro).build();
 		else
-			return ResponseEntity.status(status).body(grupoEntidade);
+			return ResponseEntity.status(statusSucesso).body(grupoEntidade);
 	}
 
 }
