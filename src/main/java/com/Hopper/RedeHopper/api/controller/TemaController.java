@@ -2,6 +2,7 @@ package com.Hopper.RedeHopper.api.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Hopper.RedeHopper.api.model.output.PostagemOutput;
 import com.Hopper.RedeHopper.api.model.output.TemaOutput;
 import com.Hopper.RedeHopper.api.model.output.UtilModelToOutput;
+import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
 import com.Hopper.RedeHopper.domain.service.TemaService;
 
@@ -70,6 +72,13 @@ public class TemaController {
 		Optional<TemaEntidade> tema= temaService.getTemaRepositorio().findById(id_tema);
 		if(tema.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		else return ResponseEntity.ok(UtilModelToOutput.postagemEntidadeToOutputList(tema.get().getPostagemList()));
+	}
+	
+	@GetMapping("/buscar/{id_tema}/grupos")
+	public ResponseEntity<Set<GrupoEntidade>> retornaGruposDeTema(@PathVariable long id_tema){
+		Optional<TemaEntidade> tema= temaService.getTemaRepositorio().findById(id_tema);
+		if(tema.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		else return ResponseEntity.ok(tema.get().getGrupoList());
 	}
 	
 	private ResponseEntity<TemaOutput> responseTemaOutput(TemaEntidade entidade, HttpStatus statusSucesso, 
