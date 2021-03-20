@@ -65,7 +65,12 @@ public class TemaController {
 		return this.responseTemaOutput(tema.get(), HttpStatus.OK, HttpStatus.NOT_FOUND);
 	}
 	
-	
+	@GetMapping("/buscar/{id_tema}/postagens")
+	public ResponseEntity<List<PostagemOutput>> retornaPostagemDeTema(@PathVariable long id_tema){
+		Optional<TemaEntidade> tema= temaService.getTemaRepositorio().findById(id_tema);
+		if(tema.isEmpty()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		else return ResponseEntity.ok(UtilModelToOutput.postagemEntidadeToOutputList(tema.get().getPostagemList()));
+	}
 	
 	private ResponseEntity<TemaOutput> responseTemaOutput(TemaEntidade entidade, HttpStatus statusSucesso, 
 			HttpStatus statusErro){
