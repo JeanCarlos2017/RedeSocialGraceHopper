@@ -3,7 +3,6 @@ package com.Hopper.RedeHopper.api.model.output;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.Hopper.RedeHopper.domain.model.ComentarioEntidade;
 import com.Hopper.RedeHopper.domain.model.PostagemEntidade;

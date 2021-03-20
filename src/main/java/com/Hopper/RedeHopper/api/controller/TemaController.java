@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Hopper.RedeHopper.api.model.output.PostagemOutput;
 import com.Hopper.RedeHopper.api.model.output.TemaOutput;
+import com.Hopper.RedeHopper.api.model.output.UtilModelToOutput;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
 import com.Hopper.RedeHopper.domain.service.TemaService;
 
@@ -38,8 +40,9 @@ public class TemaController {
 	}
 	
 	@GetMapping("/listar")
-	public ResponseEntity<List<TemaEntidade>> listaTema() {
-		return ResponseEntity.ok(temaService.getTemaRepositorio().findAll());
+	public ResponseEntity<List<TemaOutput>> listaTema() {
+		List<TemaEntidade> temaList= temaService.getTemaRepositorio().findAll();
+		return ResponseEntity.ok(UtilModelToOutput.temaEntidadeToOutputList(temaList));
 	}
 	
 	@DeleteMapping("/deletar/{id_tema}")
@@ -51,10 +54,9 @@ public class TemaController {
 	}
 	
 	@PutMapping("/alterar/{id_tema}")
-	public ResponseEntity<TemaEntidade> alteraTema(@Valid @PathVariable long id_tema, @RequestBody TemaEntidade tema) {
+	public ResponseEntity<TemaOutput> alteraTema(@Valid @PathVariable long id_tema, @RequestBody TemaEntidade tema) {
 		TemaEntidade update= temaService.put(tema, id_tema);
-		if(update != null) return ResponseEntity.status(HttpStatus.ACCEPTED).body(tema);
-		else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return this.responseTemaOutput(update, HttpStatus.ACCEPTED, HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping("/buscar/{id_tema}")
@@ -62,6 +64,8 @@ public class TemaController {
 		Optional<TemaEntidade> tema= temaService.getTemaRepositorio().findById(id_tema);
 		return this.responseTemaOutput(tema.get(), HttpStatus.OK, HttpStatus.NOT_FOUND);
 	}
+	
+	
 	
 	private ResponseEntity<TemaOutput> responseTemaOutput(TemaEntidade entidade, HttpStatus statusSucesso, 
 			HttpStatus statusErro){
