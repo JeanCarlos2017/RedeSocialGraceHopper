@@ -32,8 +32,9 @@ public class TemaController {
 	private TemaService temaService;
 	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<TemaEntidade> addTema(@Valid @RequestBody TemaEntidade tema) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(temaService.save(tema));
+	public ResponseEntity<TemaOutput> addTema(@Valid @RequestBody TemaEntidade tema) {
+		TemaEntidade entidade= temaService.save(tema);
+		return this.responseTemaOutput(entidade, HttpStatus.CREATED, HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping("/listar")
