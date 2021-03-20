@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Hopper.RedeHopper.api.model.output.TemaOutput;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
 import com.Hopper.RedeHopper.domain.service.TemaService;
 
@@ -56,9 +57,14 @@ public class TemaController {
 	}
 	
 	@GetMapping("/buscar/{id_tema}")
-	public ResponseEntity<TemaEntidade> buscaPorId(@PathVariable long id_tema){
+	public ResponseEntity<TemaOutput> buscaPorId(@PathVariable long id_tema){
 		Optional<TemaEntidade> tema= temaService.getTemaRepositorio().findById(id_tema);
-		if(tema.isPresent()) return ResponseEntity.status(HttpStatus.OK).body(tema.get());
-		else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return this.responseTemaOutput(tema.get(), HttpStatus.OK, HttpStatus.NOT_FOUND);
+	}
+	
+	private ResponseEntity<TemaOutput> responseTemaOutput(TemaEntidade entidade, HttpStatus statusSucesso, 
+			HttpStatus statusErro){
+		if(entidade == null) return ResponseEntity.status(statusErro).body(null);
+		else return ResponseEntity.status(statusSucesso).body(new TemaOutput(entidade));
 	}
 }
