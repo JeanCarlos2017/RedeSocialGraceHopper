@@ -3,6 +3,7 @@ package com.Hopper.RedeHopper.api.model.output;
 import com.Hopper.RedeHopper.domain.model.UsuarioEntidade;
 
 public class UsuarioOutput {
+	private long id;
 	private String nome;
 	
 	private String url_foto;
@@ -11,13 +12,24 @@ public class UsuarioOutput {
 	
 	//construtor 
 	public UsuarioOutput(UsuarioEntidade usuario) {
+		this.id= usuario.getId_usuario();
 		this.nome= usuario.getNome();
 		this.url_foto= usuario.getUrl_foto();
 		this.codigo_usuario= usuario.getCodigo_usuario();
 	}
-
+	
+	//getters and setters 
+	
 	public String getNome() {
 		return nome;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public void setNome(String nome) {
