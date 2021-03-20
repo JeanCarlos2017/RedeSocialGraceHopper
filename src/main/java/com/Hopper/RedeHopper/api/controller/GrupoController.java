@@ -5,74 +5,44 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
-import com.Hopper.RedeHopper.domain.repository.GrupoRepository;
+import com.Hopper.RedeHopper.domain.service.GrupoService;
 
 @RestController
-@RequestMapping("grupo/{id_grupo}/grupo")
+@RequestMapping("usuario/{id_usuario}/grupo")
 @CrossOrigin("*")
 public class GrupoController {
-	
+
 	@Autowired
-	private GrupoRepository repository;
+	private GrupoService grupoService;
 	
-	@GetMapping("")
-	public ResponseEntity<List<GrupoEntidade>> GetAll(){
-		return ResponseEntity.ok(repository.findAll());
+	@GetMapping("/listar")
+	public ResponseEntity<List<GrupoEntidade>> listarGrupo(){
+		return ResponseEntity.ok(grupoService.listarGrupo());
 	}
 	
-	@GetMapping("/grupo/{id_grupo}/grupo")
-	public ResponseEntity<GrupoEntidade> findById(@Valid @PathVariable long id_grupo) {
-		return repository.findById(id_grupo)
-				.map(Resp -> ResponseEntity.ok(Resp))
-				.orElse(ResponseEntity.notFound().build());
+	@PostMapping("/cadastrar")
+	public ResponseEntity<GrupoEntidade> cadastraGrupo(@Valid @PathVariable long id_usuario,
+		@RequestBody GrupoEntidade grupoEntidade) {
+		return this.valida(this.grupoService.criarGrupo(id_usuario, grupoEntidade), HttpStatus.CREATED);
 	}
-	
-	@GetMapping("/nome/{nome}/grupo")
-	public ResponseEntity<List<GrupoEntidade>> GetByNome(@Valid @PathVariable String nome) {
-		return ResponseEntity.ok(repository.findAllByNomeContaining(nome));
-	}
-	
-//	@GetMapping("/tema/{temaList}/grupo")
-//	public ResponseEntity<List<GrupoEntidade>> GetByTema(@Valid @PathVariable String tema) {
-//		return ResponseEntity.ok(repository.findAllByTemaContaining(tema));
-//	}
-	
-//	@GetMapping("/usario/{usuarioList}/grupo")
-//	public ResponseEntity<List<GrupoEntidade>> GetByUsuario(@Valid @PathVariable String usuario) {
-//		return ResponseEntity.ok(repository.findAllByUsuarioContaining(usuario));
-//	}
-	
-//	@PostMapping("/cadastrar")
-//	public ResponseEntity<GrupoEntidade> addPostagem(@Valid @PathVariable long id_usuario,
-//								@RequestBody PostagemEntidade postagem) {
-//		return this.valida(postagemService.cadastraPostagem(postagem, id_usuario), HttpStatus.CREATED);
-//	}
-//
-//	
-//	
-//	@PostMapping
-//	public ResponseEntity<GrupoEntidade> Post (@Valid @RequestBody Postagem postagem){
-//		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
-//	}
-//	
-//	@PutMapping
-//	public ResponseEntity<GrupoEntidade> Put (@Valid @RequestBody Postagem postagem){
-//		return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));	
-//	}
-	
-	@DeleteMapping("/{id}")
-	public void delete (@PathVariable long id) {
-		repository.deleteById(id);
+
+	// ValidaComentario
+	private ResponseEntity<GrupoEntidade> valida(GrupoEntidade grupoEntidade, HttpStatus status) {
+		if (grupoEntidade == null)
+			return ResponseEntity.badRequest().build();
+		else
+			return ResponseEntity.status(status).body(grupoEntidade);
 	}
 
 }
-

@@ -74,6 +74,16 @@ public class TemaEntidade {
 	public void setPostagemList(Set<PostagemEntidade> postagemList) {
 		this.postagemList = postagemList;
 	}
+
+	public Set<GrupoEntidade> getGrupoList() {
+		return grupoList;
+	}
+
+	public void setGrupoList(Set<GrupoEntidade> grupoList) {
+		this.grupoList = grupoList;
+	}
+	
+	
 	
 	
 

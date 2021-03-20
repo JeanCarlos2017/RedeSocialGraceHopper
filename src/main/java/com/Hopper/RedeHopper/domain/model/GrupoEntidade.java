@@ -58,7 +58,6 @@ public class GrupoEntidade {
 	private Set<TemaEntidade> grupoTemaList= new HashSet<>();
 	
 	//Relação Grupo-Postagem
-	
 	@OneToMany(mappedBy= "postagemGrupo", cascade= CascadeType.ALL)
 	@JsonIgnoreProperties("postagemGrupo")
 	private List<PostagemEntidade> grupoPostagemList = new ArrayList<PostagemEntidade>();
