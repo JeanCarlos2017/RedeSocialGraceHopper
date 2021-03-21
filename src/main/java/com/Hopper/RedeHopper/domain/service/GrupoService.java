@@ -136,4 +136,19 @@ public class GrupoService {
 		}
 		return false;
 	}
+
+	public boolean addPostagemGrupo(long id_grupo, long id_postagem) {
+		Optional<PostagemEntidade> postagem= postagemService.getPostagemRepositorio().findById(id_postagem);
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (postagem.isPresent() && grupo.isPresent()) {
+			postagem.get().setPostagemGrupo(grupo.get());
+			grupo.get().getGrupoPostagemList().add(postagem.get());
+			postagemService.save(postagem.get());
+			this.grupoRepositorio.save(grupo.get());	
+			return true;
+		}
+		return false;
+	}
+
 }
+

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hopper.RedeHopper.api.model.output.GrupoOutput;
+import com.Hopper.RedeHopper.api.model.output.PostagemOutput;
 import com.Hopper.RedeHopper.api.model.output.UsuarioOutput;
 import com.Hopper.RedeHopper.api.model.output.UtilModelToOutput;
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
@@ -52,6 +53,22 @@ public class GrupoController {
 		}
 		else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
+	
+	@PostMapping("{id_grupo}/adicionar/postagem/{id_postagem}")
+	public ResponseEntity<Void> cadastraPostagem(@PathVariable long id_grupo, @PathVariable long id_postagem){
+		if (grupoService.addPostagemGrupo(id_grupo, id_postagem)) {
+			return ResponseEntity.status(HttpStatus.OK).build();
+		}
+		else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+	}
+	
+	@GetMapping("{id_grupo}/listar/postagem")
+	public ResponseEntity<List<PostagemOutput>> listarPostagem(@PathVariable long id_grupo){
+		return ResponseEntity.ok(UtilModelToOutput.postagemEntidadeToOutputList(this.grupoService.listarPostagem(id_grupo)));
+	}
+	
+	
+	
 	
 	// ValidaComentario
 	private ResponseEntity<GrupoOutput> valida(GrupoEntidade grupoEntidade, HttpStatus status) {
