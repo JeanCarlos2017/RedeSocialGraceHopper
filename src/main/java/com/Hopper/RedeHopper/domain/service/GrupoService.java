@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
+import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
 import com.Hopper.RedeHopper.domain.model.UsuarioEntidade;
 import com.Hopper.RedeHopper.domain.repository.GrupoRepository;
@@ -107,5 +108,47 @@ public class GrupoService {
 		return false;
 	}
 	
+	public List<PostagemEntidade> listarPostagem(long id_grupo) {
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (grupo.isPresent()) {
+			return grupo.get().getGrupoPostagemList();
+		}
+		return null;
+	} 
+	
+	public Set<UsuarioEntidade> listarMembro(long id_grupo) {
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (grupo.isPresent()) {
+			return grupo.get().getUsuarioParticipanteList();
+		}
+		return null;
+	}
+	
+	public boolean addParticipanteGrupo (long id_grupo, long id_usuario) {
+		Optional<UsuarioEntidade> usuario= usuarioService.getUsuarioRepository().findById(id_usuario);
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (usuario.isPresent() && grupo.isPresent()) {
+			usuario.get().getGrupoParticipanteList().add(grupo.get());
+			grupo.get().getUsuarioParticipanteList().add(usuario.get());
+			usuarioService.cadastraUsuario(usuario.get());
+			this.grupoRepositorio.save(grupo.get());	
+			return true;
+		}
+		return false;
+	}
+
+	public boolean addPostagemGrupo(long id_grupo, long id_postagem) {
+		Optional<PostagemEntidade> postagem= postagemService.getPostagemRepositorio().findById(id_postagem);
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (postagem.isPresent() && grupo.isPresent()) {
+			postagem.get().setPostagemGrupo(grupo.get());
+			grupo.get().getGrupoPostagemList().add(postagem.get());
+			postagemService.save(postagem.get());
+			this.grupoRepositorio.save(grupo.get());	
+			return true;
+		}
+		return false;
+	}
+
 }
 
