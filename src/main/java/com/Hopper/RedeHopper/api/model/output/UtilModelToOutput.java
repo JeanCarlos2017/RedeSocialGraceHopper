@@ -8,6 +8,7 @@ import com.Hopper.RedeHopper.domain.model.ComentarioEntidade;
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
 import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
+import com.Hopper.RedeHopper.domain.model.UsuarioEntidade;
 
 public class UtilModelToOutput {
 	// pega uma lista de comentarioEntidade e a transforma em uma lista de ComentarioOutput
@@ -47,4 +48,12 @@ public class UtilModelToOutput {
 	public static PostagemOutput postagemEntidadeToOutput(PostagemEntidade postagemEntidade) {
 		return new PostagemOutput(postagemEntidade);
 	}
-}
+	
+	//usuarioEntidadeList --> UsuarioOutputList
+	public static List<UsuarioOutput> usuarioEntidadeToOutputList(Collection<UsuarioEntidade> usuarioEntidadeList) {
+		List<UsuarioOutput> usuarioList= new ArrayList<>();
+		usuarioEntidadeList.stream().
+			forEach(usuarioEntidade -> usuarioList.add(new UsuarioOutput(usuarioEntidade)));
+		return usuarioList;
+	}
+}	

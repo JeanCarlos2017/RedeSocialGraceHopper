@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
+import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
 import com.Hopper.RedeHopper.domain.model.UsuarioEntidade;
 import com.Hopper.RedeHopper.domain.repository.GrupoRepository;
@@ -106,6 +107,24 @@ public class GrupoService {
 		}
 		return false;
 	}
+	
+	public List<PostagemEntidade> listarPostagem(long id_grupo) {
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (grupo.isPresent()) {
+			return grupo.get().getGrupoPostagemList();
+		}
+		return null;
+	}
+	
+	public Set<UsuarioEntidade> listarMembro(long id_grupo) {
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (grupo.isPresent()) {
+			return grupo.get().getUsuarioParticipanteList();
+		}
+		return null;
+	}
+	
+	
 	
 }
 

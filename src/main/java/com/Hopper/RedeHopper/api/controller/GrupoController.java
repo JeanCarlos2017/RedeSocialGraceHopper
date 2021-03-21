@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Hopper.RedeHopper.api.model.output.GrupoOutput;
+import com.Hopper.RedeHopper.api.model.output.UsuarioOutput;
 import com.Hopper.RedeHopper.api.model.output.UtilModelToOutput;
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
 import com.Hopper.RedeHopper.domain.service.GrupoService;
@@ -38,6 +39,12 @@ public class GrupoController {
 		@RequestBody GrupoEntidade grupoEntidade) {
 		return this.valida(this.grupoService.criarGrupo(id_usuario, grupoEntidade), HttpStatus.CREATED);
 	}
+	
+	@GetMapping("{id_grupo}/listar/membro")
+	public ResponseEntity<List<UsuarioOutput>>listarMembro(@PathVariable long id_grupo){
+		return ResponseEntity.ok(UtilModelToOutput.usuarioEntidadeToOutputList(this.grupoService.listarMembro(id_grupo)));
+	}
+	
 
 	// ValidaComentario
 	private ResponseEntity<GrupoOutput> valida(GrupoEntidade grupoEntidade, HttpStatus status) {
