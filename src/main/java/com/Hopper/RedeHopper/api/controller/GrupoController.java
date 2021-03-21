@@ -45,7 +45,14 @@ public class GrupoController {
 		return ResponseEntity.ok(UtilModelToOutput.usuarioEntidadeToOutputList(this.grupoService.listarMembro(id_grupo)));
 	}
 	
-
+	@PostMapping("{id_grupo}/cadastrar/{id_usuario}")
+	public ResponseEntity<Void> cadastraMembro(@PathVariable long id_grupo, @PathVariable long id_usuario){
+		if (grupoService.addParticipanteGrupo(id_grupo, id_usuario)) {
+			return ResponseEntity.status(HttpStatus.OK).build();
+		}
+		else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+	}
+	
 	// ValidaComentario
 	private ResponseEntity<GrupoOutput> valida(GrupoEntidade grupoEntidade, HttpStatus status) {
 		if (grupoEntidade == null)

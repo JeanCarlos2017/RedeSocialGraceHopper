@@ -114,7 +114,7 @@ public class GrupoService {
 			return grupo.get().getGrupoPostagemList();
 		}
 		return null;
-	}
+	} 
 	
 	public Set<UsuarioEntidade> listarMembro(long id_grupo) {
 		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
@@ -124,7 +124,16 @@ public class GrupoService {
 		return null;
 	}
 	
-	
-	
+	public boolean addParticipanteGrupo (long id_grupo, long id_usuario) {
+		Optional<UsuarioEntidade> usuario= usuarioService.getUsuarioRepository().findById(id_usuario);
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		if (usuario.isPresent() && grupo.isPresent()) {
+			usuario.get().getGrupoParticipanteList().add(grupo.get());
+			grupo.get().getUsuarioParticipanteList().add(usuario.get());
+			usuarioService.cadastraUsuario(usuario.get());
+			this.grupoRepositorio.save(grupo.get());	
+			return true;
+		}
+		return false;
+	}
 }
-
