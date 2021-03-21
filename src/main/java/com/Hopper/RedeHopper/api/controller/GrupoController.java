@@ -67,9 +67,6 @@ public class GrupoController {
 		return ResponseEntity.ok(UtilModelToOutput.postagemEntidadeToOutputList(this.grupoService.listarPostagem(id_grupo)));
 	}
 	
-	
-	
-	
 	// ValidaComentario
 	private ResponseEntity<GrupoOutput> valida(GrupoEntidade grupoEntidade, HttpStatus status) {
 		if (grupoEntidade == null)
