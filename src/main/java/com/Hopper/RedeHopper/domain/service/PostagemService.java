@@ -129,7 +129,7 @@ public class PostagemService {
 		Iterator<TemaEntidade> value = post.getTemaList().iterator();
 		while(value.hasNext()) {
 			//se encontrar algum id de uma tema inexistente retorna false e cancela o salvamento
-			if(postagemRepositorio.findById(value.next().getId_tema()).isEmpty()) {
+			if(temaService.getTemaRepositorio().findById(value.next().getId_tema()).isEmpty()) {
 				return true;
 			}
 		}

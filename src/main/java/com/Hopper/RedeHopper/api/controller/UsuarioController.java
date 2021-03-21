@@ -1,5 +1,6 @@
 package com.Hopper.RedeHopper.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Hopper.RedeHopper.api.model.output.UsuarioOutput;
 import com.Hopper.RedeHopper.domain.model.UsuarioEntidade;
 import com.Hopper.RedeHopper.domain.model.UsuarioLogin;
 import com.Hopper.RedeHopper.domain.service.UsuarioService;
@@ -27,8 +29,11 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	
 	@GetMapping("/listar")
-	public ResponseEntity<List<UsuarioEntidade>> getAll(){
-		return ResponseEntity.ok(usuarioService.getUsuarioRepository().findAll());
+	public ResponseEntity<List<UsuarioOutput>> getAll(){
+		//return ResponseEntity.ok(usuarioService.getUsuarioRepository().findAll());
+		return ResponseEntity.ok(listaUsuarioToUsuarioOutput(
+				usuarioService.getUsuarioRepository().findAll())
+		);
 	}
 	
 	@PostMapping("/cadastrar")
@@ -47,5 +52,13 @@ public class UsuarioController {
 	private ResponseEntity<UsuarioEntidade> valida(UsuarioEntidade user, HttpStatus status){
 		if (user == null) return ResponseEntity.badRequest().build();
 		else return ResponseEntity.status(status).body(user);
+	}
+	
+	private List<UsuarioOutput> listaUsuarioToUsuarioOutput(List<UsuarioEntidade> usuarioLista){
+		List<UsuarioOutput> usuarioOutputList= new ArrayList<UsuarioOutput>();
+		usuarioLista.stream().forEach(
+				usuario -> usuarioOutputList.add(new UsuarioOutput(usuario))
+		);
+		return usuarioOutputList;
 	}
 }

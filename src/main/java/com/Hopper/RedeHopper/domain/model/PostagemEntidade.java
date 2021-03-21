@@ -2,8 +2,10 @@ package com.Hopper.RedeHopper.domain.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,14 +40,25 @@ public class PostagemEntidade {
 	private String imagem;
 	
 	private long saldo_reacoes= 0;
-	
+	//relação tema-postagens
 	@ManyToMany(mappedBy= "postagemList", fetch= FetchType.LAZY)
 	@JsonIgnoreProperties("postagemList")
 	private Set<TemaEntidade> temaList= new HashSet<>();
-	
+
+	//relação postagens-usuário
 	@ManyToOne
 	@JsonIgnoreProperties("postagensUsuario")
 	UsuarioEntidade usuario;
+
+	//relação postagem-grupo
+	@ManyToOne
+	@JsonIgnoreProperties("grupoPostagemList")
+	private GrupoEntidade postagemGrupo;
+
+	//relação postagem-comentário
+	@OneToMany(mappedBy="postagemComentario", cascade= CascadeType.ALL)
+	@JsonIgnoreProperties("postagemComentario")
+	private List<ComentarioEntidade> comentariosPostagem;
 	
 	//construtor
 	public PostagemEntidade() {
@@ -121,6 +135,22 @@ public class PostagemEntidade {
 	public void setUsuario(UsuarioEntidade usuario) {
 		this.usuario = usuario;
 	}
-	
+
+	public GrupoEntidade getPostagemGrupo() {
+		return postagemGrupo;
+	}
+
+	public void setPostagemGrupo(GrupoEntidade postagemGrupo) {
+		this.postagemGrupo = postagemGrupo;
+	}
+
+	public List<ComentarioEntidade> getComentariosPostagem() {
+		return comentariosPostagem;
+	}
+
+	public void setComentariosPostagem(List<ComentarioEntidade> comentariosPostagem) {
+		this.comentariosPostagem = comentariosPostagem;
+	}
+
 	
 }
