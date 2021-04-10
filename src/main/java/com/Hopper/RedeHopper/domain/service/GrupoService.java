@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.Hopper.RedeHopper.api.model.output.PostagemOutput;
 import com.Hopper.RedeHopper.domain.model.GrupoEntidade;
 import com.Hopper.RedeHopper.domain.model.PostagemEntidade;
 import com.Hopper.RedeHopper.domain.model.TemaEntidade;
@@ -154,6 +155,31 @@ public class GrupoService {
 	public Collection<GrupoEntidade> buscaPorNome(String nome) {
 		return this.grupoRepositorio.findAllByNomeContainingIgnoreCase(nome);
 	}
+
+	public Optional<GrupoEntidade> buscaPorId(long id) {
+		return this.grupoRepositorio.findById(id);
+	}
+
+	public PostagemEntidade cadastraPostagemNoGrupo(long id_grupo, PostagemEntidade post, long id_user) {
+		Optional<GrupoEntidade> grupo= grupoRepositorio.findById(id_grupo);
+		PostagemEntidade novoPost;
+		//verifico se o grupo existe 
+		if(grupo.isPresent()) {
+			//crio a postagem
+			
+			//post.setTemaList(grupo.get().getGrupoTemaList());
+			novoPost= postagemService.cadastraPostagem(post, id_user);
+			//adiciono a postagem no grupo
+			boolean addPostagemGrupo= this.addPostagemGrupo(id_grupo, novoPost.getId_postagem());
+			//verifica se adicionou
+			if(addPostagemGrupo) return novoPost;
+			else return null;
+			
+		}
+		return null;
+	}
+
+	
 
 }
 
