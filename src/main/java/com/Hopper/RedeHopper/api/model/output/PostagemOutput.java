@@ -15,7 +15,7 @@ public class PostagemOutput {
 	private long saldo_reacoes;
 	private List<TemaOutput> temaList = new ArrayList<>();
 	private List<ComentarioOutput> comentarioList = new ArrayList<ComentarioOutput>();
-
+	private String conteudo;
 	public PostagemOutput(PostagemEntidade postagemEntidade) {
 		this.id_postagem = postagemEntidade.getId_postagem();
 		if (postagemEntidade.getUsuario() != null) {
@@ -30,6 +30,7 @@ public class PostagemOutput {
 			this.comentarioList= UtilModelToOutput
 						.comentarioEntidadeListToOutput(postagemEntidade.getComentariosPostagem());
 		}
+		this.conteudo= postagemEntidade.getConteudo();
 	}
 
 	public long getId_postagem() {
@@ -95,5 +96,15 @@ public class PostagemOutput {
 	public void setComentarioList(List<ComentarioOutput> comentarioList) {
 		this.comentarioList = comentarioList;
 	}
+
+	public String getConteudo() {
+		return conteudo;
+	}
+
+	public void setConteudo(String conteudo) {
+		this.conteudo = conteudo;
+	}
+	
+	
 
 }

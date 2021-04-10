@@ -85,5 +85,8 @@ public class UsuarioService {
 		return usuarioRepository;
 	}
 	
+	public Optional<UsuarioEntidade> buscaUsuarioPorId(long id){
+		return this.usuarioRepository.findById(id);
+	}
 	
 }

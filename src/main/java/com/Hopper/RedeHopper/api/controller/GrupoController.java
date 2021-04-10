@@ -46,7 +46,7 @@ public class GrupoController {
 		return ResponseEntity.ok(UtilModelToOutput.usuarioEntidadeToOutputList(this.grupoService.listarMembro(id_grupo)));
 	}
 	
-	@PostMapping("{id_grupo}/cadastrar/{id_usuario}")
+	@PostMapping("{id_grupo}/cadastrar")
 	public ResponseEntity<Void> cadastraMembro(@PathVariable long id_grupo, @PathVariable long id_usuario){
 		if (grupoService.addParticipanteGrupo(id_grupo, id_usuario)) {
 			return ResponseEntity.status(HttpStatus.OK).build();
@@ -65,6 +65,11 @@ public class GrupoController {
 	@GetMapping("{id_grupo}/listar/postagem")
 	public ResponseEntity<List<PostagemOutput>> listarPostagem(@PathVariable long id_grupo){
 		return ResponseEntity.ok(UtilModelToOutput.postagemEntidadeToOutputList(this.grupoService.listarPostagem(id_grupo)));
+	}
+	
+	@GetMapping("/busca/{nome}")
+	public ResponseEntity<List<GrupoOutput>> buscaGrupoPorNome(@PathVariable String nome){
+		return ResponseEntity.ok(UtilModelToOutput.grupoEntidadeToOutputList(this.grupoService.buscaPorNome(nome)));
 	}
 	
 	// ValidaComentario

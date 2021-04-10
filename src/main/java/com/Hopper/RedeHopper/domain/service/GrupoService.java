@@ -1,5 +1,6 @@
 package com.Hopper.RedeHopper.domain.service;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -148,6 +149,10 @@ public class GrupoService {
 			return true;
 		}
 		return false;
+	}
+
+	public Collection<GrupoEntidade> buscaPorNome(String nome) {
+		return this.grupoRepositorio.findAllByNomeContainingIgnoreCase(nome);
 	}
 
 }
