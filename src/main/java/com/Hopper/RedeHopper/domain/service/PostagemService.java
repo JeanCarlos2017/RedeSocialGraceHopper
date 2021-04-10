@@ -128,7 +128,9 @@ public class PostagemService {
 	private boolean verificaTemaNaoExistente(PostagemEntidade post) {
 		Iterator<TemaEntidade> value = post.getTemaList().iterator();
 		while(value.hasNext()) {
-			//se encontrar algum id que nao existente no repositório de tema eu retorno true
+
+			//se encontrar algum id de uma tema inexistente retorna false e cancela o salvamento
+
 			if(temaService.getTemaRepositorio().findById(value.next().getId_tema()).isEmpty()) {
 				return true;
 			}

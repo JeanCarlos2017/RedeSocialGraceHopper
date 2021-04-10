@@ -2,15 +2,21 @@ package com.Hopper.RedeHopper.domain.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -31,10 +37,65 @@ public class UsuarioEntidade {
 	private String url_foto;
 	
 	private long codigo_usuario;
-	
-	@OneToMany(mappedBy= "usuario", cascade= CascadeType.ALL)
+	//relação usuário-postagem
+	@OneToMany(mappedBy= "usuario", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("usuario")
-	private List<PostagemEntidade> postagensUsuario= new ArrayList<PostagemEntidade>();
+	private List<PostagemEntidade> postagensUsuario= new ArrayList<PostagemEntidade>();	
+	
+	//relação usuário-comentário
+	@OneToMany(mappedBy=  "usuarioComentario", cascade= CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("usuarioComentario")
+	private List<ComentarioEntidade> comentariosUsuario= new ArrayList<ComentarioEntidade>();
+	
+	//Relação Grupo-Criador
+	@OneToMany(mappedBy= "criadorGrupo", cascade= CascadeType.ALL)
+	@JsonIgnoreProperties("criadorGrupo")
+	private List<GrupoEntidade> gruposCriadoPorUsuarios = new ArrayList<GrupoEntidade>();	
+	
+	//Relação Grupo-Usuário
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_grupo", 
+				joinColumns = @JoinColumn(name = "usuario_id"), 
+				inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	@JsonIgnoreProperties("usuarioParticipanteList")
+	private Set<GrupoEntidade> grupoParticipanteList= new HashSet<>();
+	
+	
+	public List<PostagemEntidade> getPostagensUsuario() {
+		return postagensUsuario;
+	}
+
+	public void setPostagensUsuario(List<PostagemEntidade> postagensUsuario) {
+		this.postagensUsuario = postagensUsuario;
+	}
+
+	public List<ComentarioEntidade> getComentariosUsuario() {
+		return comentariosUsuario;
+	}
+
+	public void setComentariosUsuario(List<ComentarioEntidade> comentariosUsuario) {
+		this.comentariosUsuario = comentariosUsuario;
+	}
+
+	public List<GrupoEntidade> getGruposCriadoPorUsuarios() {
+		return gruposCriadoPorUsuarios;
+	}
+
+	public void setGruposCriadoPorUsuarios(List<GrupoEntidade> gruposCriadoPorUsuarios) {
+		this.gruposCriadoPorUsuarios = gruposCriadoPorUsuarios;
+	}
+
+	public Set<GrupoEntidade> getGrupoParticipanteList() {
+		return grupoParticipanteList;
+	}
+
+	public void setGrupoParticipanteList(Set<GrupoEntidade> grupoParticipanteList) {
+		this.grupoParticipanteList = grupoParticipanteList;
+	}
+
+	public void setCodigo_usuario(long codigo_usuario) {
+		this.codigo_usuario = codigo_usuario;
+	}
 
 	public UsuarioEntidade() {
 		
