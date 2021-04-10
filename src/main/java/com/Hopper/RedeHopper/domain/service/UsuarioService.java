@@ -67,6 +67,7 @@ public class UsuarioService {
 				userParametro.get().setCodigo_usuario(usuario.get().getCodigo_usuario());
 				userParametro.get().setUrl_foto(usuario.get().getUrl_foto());
 				userParametro.get().setEmail(usuario.get().getEmail());
+				userParametro.get().setId(usuario.get().getId_usuario());
 				return userParametro;				
 			}else {
 				return null;
@@ -84,5 +85,8 @@ public class UsuarioService {
 		return usuarioRepository;
 	}
 	
+	public Optional<UsuarioEntidade> buscaUsuarioPorId(long id){
+		return this.usuarioRepository.findById(id);
+	}
 	
 }

@@ -1,5 +1,6 @@
 package com.Hopper.RedeHopper.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,8 @@ public class TemaService {
 		return temaRepositorio;
 	}
 	
+	public List<TemaEntidade> buscaPorDescricao(String descricao){
+		return this.temaRepositorio.findAllByCategoriaContainingIgnoreCase(descricao);
+	}
 	
 }

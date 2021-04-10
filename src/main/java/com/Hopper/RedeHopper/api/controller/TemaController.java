@@ -81,6 +81,13 @@ public class TemaController {
 		else return ResponseEntity.ok(tema.get().getGrupoList());
 	}
 	
+	@GetMapping("/busca-descricao/{descricao}")
+	public ResponseEntity<List<TemaOutput>> retornaTemaContemDescricao(@PathVariable String descricao){
+		return ResponseEntity.ok(UtilModelToOutput.temaEntidadeToOutputList(this.temaService.buscaPorDescricao(descricao)
+				));
+	}
+	
+	
 	private ResponseEntity<TemaOutput> responseTemaOutput(TemaEntidade entidade, HttpStatus statusSucesso, 
 			HttpStatus statusErro){
 		if(entidade == null) return ResponseEntity.status(statusErro).body(null);

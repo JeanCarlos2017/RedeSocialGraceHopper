@@ -138,5 +138,9 @@ public class PostagemService {
 		return false;
 	}
 	
+	public PostagemEntidade savePost(PostagemEntidade post) {
+		//salva os post que já tem um tema
+		return  this.postagemRepositorio.save(post);
+	}
 	
 }

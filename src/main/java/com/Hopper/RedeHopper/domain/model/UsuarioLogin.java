@@ -2,6 +2,7 @@ package com.Hopper.RedeHopper.domain.model;
 
 
 public class UsuarioLogin {
+	private long id;
 	
 	private String email;
 	
@@ -61,6 +62,14 @@ public class UsuarioLogin {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	
